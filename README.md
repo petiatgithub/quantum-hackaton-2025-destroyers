@@ -41,6 +41,11 @@ Your task is to design and implement a compiler that translates the Quantum Four
     - Ensure that the fidelity between the ideal QFT circuit and the compiled noisy circuit is as high as possible.
 
 5. **Generate Outputs**:
+    Your compiler should produce two main outputs: `positions_history` and `gates_schedule`. (see below for details)
+
+    - `positions_history` tracks the location of each ion at every time step.
+    - `gates_schedule` lists the quantum gates applied at each time step.
+
     To validate your outputs and ensure correctness, you can use the provided `verifier` and `fidelity` functions. Here's how you can integrate them into your workflow:
 
     ```python
