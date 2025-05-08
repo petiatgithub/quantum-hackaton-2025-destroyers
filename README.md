@@ -6,7 +6,7 @@ Welcome to the challenge! Your goal is to compile a Quantum Fourier Transform (Q
 
 A Penning trap confines charged particles using a combination of a strong static magnetic field (for radial confinement) and a quadrupole electric potential (for axial confinement).
 
-Unlike the linear 1D arrays typically used in RF traps, Penning traps enable ions to shuttle across a 2D grid. This added flexibility can significantly reduce transport costs and improve gate scheduling efficiency, as ions can take shorter paths to their destinations and avoid congestion at critical nodes.
+Unlike the linear 1D arrays typically used in RF traps, Penning traps can naturally form 2D grids of trap sites that can be reconfigured (even in 3D!). This added flexibility can significantly reduce transport costs and improve gate scheduling efficiency, as ions can take shorter paths to their destinations and avoid congestion at critical nodes.
 
 ### Your Task: Implementing the Compiler
 
