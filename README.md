@@ -17,7 +17,6 @@ Your task is to design and implement a compiler that translates the Quantum Four
     To get started, ensure you have Python 3 installed on your system. Then, install the required dependencies:
 
     ```bash
-    # Install Python dependencies
     pip install networkx pennylane==0.37.0
     ```
 
