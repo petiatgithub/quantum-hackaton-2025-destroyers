@@ -10,9 +10,9 @@ def circuit():
     return qml.density_matrix(wires=range(8))
 
 
-def user_circuit(gates_schedule):
+def compiled_circuit(gates_schedule) -> qml.QNode:
     """
-    Build a Pennylane circuit from the list of gates.
+    Build the compiled circuit from the gates schedule.
 
     Args:
         gates_schedule (list): A list of gates where each gate is represented as a tuple.
@@ -38,7 +38,12 @@ def user_circuit(gates_schedule):
 
 def verifier(positions_history, gates_schedule, graph) -> None:
     """
-    Check if the positions_history of the ions are valid.
+    Verify the positions and gates schedule of the circuit.
+
+    Args:
+        positions_history (list): A list of positions for each step in the circuit.
+        gates_schedule (list): A list of gates where each gate is represented as a tuple.
+        graph (networkx.Graph): The graph representing the Penning trap.
     """
     print("Verifying the positions and gates_schedule...")
     for i, positions in enumerate(positions_history):
@@ -207,7 +212,7 @@ def verifier(positions_history, gates_schedule, graph) -> None:
     print("Positions and gates are valid.")
     print("Verifying the fidelity of the circuit without adding noise...")
     expected_result = circuit()
-    user_result = user_circuit(gates_schedule)()
+    user_result = compiled_circuit(gates_schedule)()
     user_fidelity = qml.math.fidelity(expected_result, user_result)
     print("Fidelity of the circuit:", user_fidelity)
     assert np.allclose(expected_result, user_result, atol=1e-5), (

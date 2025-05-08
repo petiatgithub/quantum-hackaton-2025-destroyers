@@ -12,7 +12,7 @@ def circuit():
 
 def get_temperatures(positions_history, graph):
     """
-    Calculate the temperature of each ion based on its position and the graph.
+    Calculate the temperature of each ion based on its positions history and the graph.
 
     Args:
         positions_history (list): A list of positions of the ions.
@@ -103,9 +103,9 @@ class DepolarizingChannel(Channel):
         ]
 
 
-def noisy_user_circuit(gates_schedule, temperature):
+def compiled_circuit_noisy(gates_schedule, temperature) -> qml.QNode:
     """
-    Build a Pennylane circuit from the list of gates and the ion temperatures.
+    Build a noisy circuit from the list of gates and the ion temperatures.
 
     Args:
         gates_schedule (list): A list of gates where each gate is represented as a tuple.
@@ -156,7 +156,7 @@ def fidelity(positions_history, gates_schedule, graph) -> float:
         float: The fidelity of the circuit.
     """
     expected_result = circuit()
-    noisy_user_result = noisy_user_circuit(
+    noisy_user_result = compiled_circuit_noisy(
         gates_schedule, get_temperatures(positions_history, graph)
     )()
     noisy_user_fidelity = qml.math.fidelity(expected_result, noisy_user_result)

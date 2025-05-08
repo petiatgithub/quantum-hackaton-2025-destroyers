@@ -6,21 +6,30 @@ Welcome to the challenge! Your goal is to compile a Quantum Fourier Transform (Q
 
 A Penning trap confines charged particles using a combination of a strong static magnetic field (for radial confinement) and a quadrupole electric potential (for axial confinement).
 
-Unlike the linear 1D arrays typically used in RF traps, Penning traps enable ions to move across a 2D grid. This added flexibility can significantly reduce transport costs and improve gate scheduling efficiency, as ions can take shorter paths to their destinations and avoid congestion at critical nodes.
+Unlike the linear 1D arrays typically used in RF traps, Penning traps enable ions to shuttle across a 2D grid. This added flexibility can significantly reduce transport costs and improve gate scheduling efficiency, as ions can take shorter paths to their destinations and avoid congestion at critical nodes.
 
 ### Your Task: Implementing the Compiler
 
 Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the rules of the Penning trap architecture. Specifically, your compiler should:
+
+0. **Installation**:
+
+    To get started, ensure you have Python 3 installed on your system. Then, install the required dependencies:
+
+    ```bash
+    # Install Python dependencies
+    pip install networkx pennylane==0.37.0
+    ```
 
 1. **Decompose the QFT Circuit**:
     - Start with the standard QFT circuit for 8 qubits.
     - Decompose the QFT into its constituent gates (e.g., single-qubit rotations and controlled-phase gates).
     - Map these gates to the valid operations (`RX`, `RY`, `MS`) supported by the trap.
 
-2. **Plan Ion Movements**:
+2. **Plan Ion Shuttling**:
     - Determine the initial positions of the 8 ions on the trap grid.
-    - Plan the movement of ions to ensure that gates can be executed at the correct nodes while minimizing movement costs.
-    - Ensure that all movement constraints (e.g., adjacency, no overlap) are satisfied.
+    - Plan the shuttling of ions to ensure that gates can be executed at the correct nodes while minimizing shuttling costs.
+    - Ensure that all shuttling constraints (e.g., adjacency, no overlap) are satisfied.
 
 3. **Schedule Gates**:
     - Assign time steps for each gate operation, ensuring that:
@@ -29,16 +38,28 @@ Your task is to design and implement a compiler that translates the Quantum Four
     - Optimize the schedule to minimize the total time steps and temperature costs.
 
 4. **Optimize for Fidelity**:
-    - Minimize the temperature cost associated with ion movements and gate operations to reduce noise.
+    - Minimize the temperature cost associated with ion shuttling and gate operations to reduce noise.
     - Ensure that the fidelity between the ideal QFT circuit and the compiled noisy circuit is as high as possible.
 
 5. **Generate Outputs**:
-    - Produce the `positions_history` and `gates_schedule` as described in the deliverables section.
-    - Validate the outputs using the provided `verifier` function to ensure correctness and adherence to the rules.
+    To validate your outputs and ensure correctness, you can use the provided `verifier` and `fidelity` functions. Here's how you can integrate them into your workflow:
+
+    ```python
+    from verifier import verifier
+    from fidelity import fidelity
+
+    verifier(positions_history, gates_schedule, graph)
+    fidelity(positions_history, gates_schedule, graph)
+    ```
+
+    - The `verifier` function checks if your `positions_history` and `gates_schedule` adhere to all the rules outlined in the challenge.
+    - The `fidelity` function calculates the fidelity between the ideal (noise-free) quantum state and the noisy quantum state, helping you assess the performance of your compiled circuit.
+
+    Make sure to run these functions after generating your outputs to ensure they meet the challenge requirements.
 
 6. **Visualize the Compilation Process**:
     - Create a visualization (e.g., a video or diagram) that illustrates:
-      - The movement of ions across the trap at each time step.
+      - The shuttling of ions across the trap at each time step.
       - The execution of gates and their corresponding positions.
     - Use this visualization to analyze and refine your approach.
 
@@ -72,21 +93,21 @@ Your task is to design and implement a compiler that translates the Quantum Four
     *   **MS Gates**:
         *   Must be applied when the two participating ions are located at the *same* `interaction` node.
         *   Last for **two units of time**. During these two units, the participating ions must remain at the interaction node.
-3.  **Ion Movement and Constraints**:
+3.  **Ion shuttling and Constraints**:
     *   Ions can only move between adjacent nodes in the graph (i.e., where an edge exists).
     *   A move between adjacent nodes takes **one unit of time**.
     *   **No Overlap**:
         *   Two ions cannot occupy the same `standard` or `idle` node at the same time.
         *   Two ions cannot occupy simultaneously the `standard` node and the `idle` above it.
         *   Two ions can share the same `interaction` node only when an MS gate is being applied to them at that specific time (or immediately preceding it). Additionally, no more than two ions are allowed at an `interaction` node simultaneously.
-        *   During movement, if ion A moves from node X to node Y, no other ion can be at node Y at that time step. Exchange moves (A moves X->Y while B moves Y->X) are forbidden.
+        *   During shuttling, if ion A moves from node X to node Y, no other ion can be at node Y at that time step. Exchange moves (A moves X->Y while B moves Y->X) are forbidden.
 
 ## Noise
 
 A "temperature" cost is associated with each ion at each time step, reflecting the energy cost of its state/action:
 *   **Staying at a `idle` node**: Cost increase of **0.01** for that ion.
 *   **Being at a `standard` node** (either staying or moving to/from it, if not a `idle` node): Cost increase of **0.02** for that ion. This includes time steps where RX/RY gates are applied.
-*   **Movement**: If an ion moves from one node to another: Cost increase of **0.03** for that ion for that time step.
+*   **shuttling**: If an ion moves from one node to another: Cost increase of **0.03** for that ion for that time step.
 *   **MS Gate**: During an MS gate, the ions are at an `interaction` node. The cost for being at an `interaction` node is **0.02** per ion per time step.
 The temperature of all ions is evaluated at each time step. This temperature directly impacts the performance of the MS gate. Specifically, the average temperature of the two ions involved in the MS gate, denoted as $\bar{n}$, is used to calculate the parameter $p$:
 
@@ -106,7 +127,10 @@ The objective of this hackathon is to optimize the compilation process to ensure
 You must provide two main outputs:
 
 1.  **`positions_history`**: A list of lists/tuples.
-    *   `positions_history[t]` should be a list/tuple of length 8, where `positions_history[t][i]` is the node ID (e.g., `(row, col)` or `(row, col, "idle")`) representing the position of the i-th ion at time step `t`.
+    *   `positions_history[t]` should be a list/tuple of length 8, where `positions_history[t][i]` is the node ID representing the position of the i-th ion at time step `t`.
+    *   **Interaction Nodes**: Represented as `(row, col)`.
+    *   **Standard Nodes**: Represented as `(row, col)`.
+    *   **Idle Nodes**: Represented as `(row, col, "idle")`.
     *   The length of `positions_history` will be the total number of time steps your compiled circuit takes.
 
 2.  **`gates_schedule`**: A list of lists.
@@ -148,7 +172,7 @@ You must provide two main outputs:
 
     This format ensures that your outputs are clear, valid, and adhere to the rules specified in the challenge.
 
-3. Given `positions_history` and `gates_schedule` and the `graph`, create a visualization of the ion movements and gate interactions during the compilation process. This can be in the form of a video or diagram that illustrates:
+3. Given `positions_history` and `gates_schedule` and the `graph`, create a visualization of the ion shuttling and gate interactions during the compilation process. This can be in the form of a video or diagram that illustrates:
 
 * The movement of ions across the trap at each time step.
 * The execution of gates (RX, RY, MS) and their corresponding positions.
@@ -160,7 +184,7 @@ This visualization will provide valuable insights into the behavior of your comp
 *   **Validity**: The `positions_history` and `gates_schedule` must adhere to all the rules outlined above (verified by the `verifier` function).
 *   **Correctness**: The compiled sequence of gates must be equivalent to the original QFT circuit. (verified by the `verifier` function)
 *   **Cost**: The quantum fidelity is one of the main criteria for evaluation, so calculate it using the `fidelity` function to assess how closely your compiled noisy circuit matches the ideal quantum state. Strive to maximize fidelity by minimizing temperature costs.
-*   **Visualization**: The quality and clarity of the visualization video showcasing ion movements and gate interactions will also be considered. This video should effectively illustrate the compilation process and highlight areas for potential optimization.
+*   **Visualization**: The quality and clarity of the visualization video showcasing ion shuttling and gate interactions will also be considered. This video should effectively illustrate the compilation process and highlight areas for potential optimization.
 
 ## Getting Started
 
@@ -170,10 +194,11 @@ This visualization will provide valuable insights into the behavior of your comp
         - Review its decomposition into single-qubit rotations and controlled-phase gates.
     *   Review decomposition rule for one and two qubit gates into `RX`, `RY` and `MS`.
     *   The Penning trap architecture:
-        - Review the rules and constraints for ion movement and gate execution as described in the "Trap Architecture" section.
+        - Review the rules and constraints for ion shuttling and gate execution as described in the "Trap Architecture" section.
         - Understand the cost model for ion temperature and its impact on noise.
     *   The trap graph implementation in [`trap.py`](./trap.py):
         - Explore the 5x7 grid structure of the Penning trap, including the definitions of `interaction`, `standard`, and `idle` nodes.
+        - [NetworkX Documentation](https://networkx.org/documentation/stable/): Understand how to work with graphs and perform pathfinding.
     *   The `verifier` function in [`verifier.py`](./verifier.py):
         - Learn how the `verifier` checks the validity of `positions_history` and `gates_schedule`.
         - Review the constraints it enforces, such as adjacency, no overlap, and gate execution rules.
@@ -186,10 +211,7 @@ This visualization will provide valuable insights into the behavior of your comp
     *   Use the `fidelity` function to evaluate the performance of a compiled circuit.
 
 3.  Visualize the process:
-    *   Create diagrams or animations to illustrate ion movements and gate interactions.
+    *   Create diagrams or animations to illustrate ion shuttling and gate interactions.
     *   Use visualization tools to debug and optimize your compiler.
-
-4.  Explore additional resources:
-    *   [NetworkX Documentation](https://networkx.org/documentation/stable/): Understand how to work with graphs and perform pathfinding.
 
 Good luck!

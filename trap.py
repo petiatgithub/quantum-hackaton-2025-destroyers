@@ -1,9 +1,14 @@
 import networkx as nx
-from mpl_toolkits.mplot3d import Axes3D
 
 
-def create_trap_graph():
-    """Create a graph representing the Penning trap."""
+def create_trap_graph() -> nx.Graph:
+    """Create a graph representing the Penning trap.
+
+    The Penning trap is represented as a grid of nodes, where each node can be
+    either an interaction node or a standard node. The interaction nodes are
+    connected to their corresponding idle nodes, and the standard nodes are
+    connected to their neighboring standard nodes.
+    """
 
     trap = nx.Graph()
 
