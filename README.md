@@ -10,7 +10,7 @@ Unlike the linear 1D arrays typically used in RF traps, Penning traps enable ion
 
 ### Your Task: Implementing the Compiler
 
-Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the rules of the Penning trap architecture. Specifically, your compiler should:
+Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the trap architecture and physical constraints. Specifically, your compiler should:
 
 0. **Installation**:
 
