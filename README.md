@@ -4,38 +4,44 @@ Welcome to the challenge! Your goal is to compile a Quantum Fourier Transform (Q
 
 All the resources and materials for this challenge are available in the repository: [https://github.com/ZuriQ/quantum-hackaton-2025](https://github.com/ZuriQ/quantum-hackaton-2025).
 
-Feel free to clone the repository and submit issues if you encounter any. You can also ask all you physics, ion-trap and quantum related questions there and also in person to the on-site ZuriQ representative.  
+Feel free to clone the repository and submit issues if you encounter any. You can also ask all your physics, ion-trap and quantum related questions there and also in person to the on-site ZuriQ representative.  
 
 ## What is a Penning trap?
 
 A Penning trap confines charged particles using a combination of a strong static magnetic field (for radial confinement) and a quadrupole electric potential (for axial confinement). The electric potential landscape can be fine tuned using microfabricated electrodes on a trap chip that is then embedded in a magnetic field that is homogenous over the whole trapping volume. The magnetic field is generated either using a superconducting magnet or very strong permanent magnets. 
 
-Unlike the linear 1D arrays typically used in RF traps, Penning traps can naturally form 2D grids of trap sites that can be reconfigured (even in 3D!), limited only by the ability of the trap electrodes to shape the electric potentials. This added flexibility can significantly reduce transport costs and improve gate scheduling efficiency, as ions can take shorter paths to their destinations and avoid congestion at critical nodes. We at ZuriQ are just at the start of the journey and are eager to explore the possibilities unlocked by this architecture. This hackathon challenge will give you the opportunity to be creative and build compilation methods for a novel hardware architecture! 
+Unlike the linear 1D arrays typically used in RF traps, Penning traps can naturally form 2D grids of trap sites that can be reconfigured (even in 3D!), limited only by the ability of the trap electrodes to shape the electric potentials. This reconfigurability is used to move ions in and out of interaction and memory zones where they are exposed or hidden from laser beams respectively in an approach know as the Quantum Charged Couple Device (QCCD) architecutre.  The added flexibility of the Penning trap can significantly reduce transport costs in the QCCCD approach and improve gate scheduling efficiency, as ions can take shorter paths to their destinations and avoid congestion at critical nodes. We at ZuriQ are just at the start of the journey and are eager to explore the possibilities unlocked by this architecture. This hackathon challenge will give you the opportunity to be creative and build compilation methods for a novel hardware architecture! 
 
 To learn a bit more about how Penning traps work you can have a look at the references below. The underlying physics sets the limitations that we've modeled in this simplified example, but the knowledge of the classical equations of motion is not necessary for this challenge. 
 
-Quantum theory of the Pennning trap: https://www.tandfonline.com/doi/full/10.1080/09500340.2017.1393570
+**Quantum theory of the Pennning trap**
 
-**Papers from the ZuriQ team: **
+- https://www.tandfonline.com/doi/full/10.1080/09500340.2017.1393570
 
-Scalable Arrays of Micro-Penning Traps for Quantum Computing and Simulation: https://link.aps.org/doi/10.1103/PhysRevX.10.031027
+**Papers from the ZuriQ team:**
 
-Penning micro-trap for quantum computing: https://www.nature.com/articles/s41586-024-07111-x
-
-A 3-dimensional scanning trapped-ion probe: https://arxiv.org/abs/2412.17528
+-Scalable Arrays of Micro-Penning Traps for Quantum Computing and Simulation: https://link.aps.org/doi/10.1103/PhysRevX.10.031027
+-Penning micro-trap for quantum computing: https://www.nature.com/articles/s41586-024-07111-x
+-A 3-dimensional scanning trapped-ion probe: https://arxiv.org/abs/2412.17528
 
 **Heating of ions:** 
-Ion-trap measurements of electric-field noise near surfaces: https://link.aps.org/doi/10.1103/RevModPhys.87.1419
+
+-Ion-trap measurements of electric-field noise near surfaces: https://link.aps.org/doi/10.1103/RevModPhys.87.1419
+
+**QCCD:** 
+
+-Architecture for a large-scale ion-trap quantum computer: https://www.nature.com/articles/nature00784
+-Demonstration of the trapped-ion quantum CCD computer architecture: https://www.nature.com/articles/s41586-021-03318-4
 
 
 ### Your Task: Implementing the Compiler
 
-Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the trap architecture and physical constraints. The compiler needs to optimise and schedule single and two-qubit gates, while taking into account the 'cost' of reconfiguration, the limited coherence time of the qubits and the trap geometry in. Specifically, your compiler should:
+Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the trap architecture and physical constraints. The compiler needs to optimise and schedule single and two-qubit gates, while taking into account the 'cost' of reconfiguration, the limited coherence time of the qubits. and the trap geometry. Specifically, your compiler should:
 
 
 1. **Decompose the QFT Circuit**:
     - Start with the standard QFT circuit for 8 qubits.
-    - Decompose the QFT into its constituent gates (e.g., single-qubit rotations and controlled-phase gates).
+    - Decompose the QFT into its constituent gates (e.g. single-qubit rotations and controlled-phase gates).
     - Map these gates to the valid operations (`RX`, `RY`, `MS`) supported by the trap.
 
 2. **Plan Ion Shuttling**:
@@ -129,7 +135,7 @@ A "temperature" cost is associated with each ion at each time step, reflecting t
 *   **MS Gate**: During an MS gate, the ions are at an `interaction` node. The cost for being at an `interaction` node is **0.02** per ion per time step.
 
 
-The temperature of all ions is evaluated at each time step. This temperature directly impacts the performance of the MS gate. Specifically, the average temperature of the two ions involved in the MS gate, denoted as $\bar{n}$, is used to calculate the parameter $p$:
+The temperature of all ions is evaluated at each time step. This temperature directly impacts the performance of the MS gate. Specifically, the average temperature (in units of motional quanta) of the two ions involved in the MS gate, denoted as $\bar{n}$, is used to calculate the parameter $p$:
 
 $$p = \frac{\pi^2 \eta^4}{4} \bar{n} (\bar{n} + 1)$$
 
