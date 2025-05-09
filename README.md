@@ -29,15 +29,8 @@ Ion-trap measurements of electric-field noise near surfaces: https://link.aps.or
 
 ### Your Task: Implementing the Compiler
 
-Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the trap architecture and physical constraints. Specifically, your compiler should:
+Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the trap architecture and physical constraints. The compiler needs to optimise and schedule single and two-qubit gates, while taking into account the 'cost' of reconfiguration, the limited coherence time of the qubits and the trap geometry in. Specifically, your compiler should:
 
-0. **Installation**:
-
-    To get started, ensure you have Python 3 installed on your system. Then, install the required dependencies:
-
-    ```bash
-    pip install networkx pennylane==0.37.0
-    ```
 
 1. **Decompose the QFT Circuit**:
     - Start with the standard QFT circuit for 8 qubits.
@@ -215,6 +208,13 @@ This visualization will provide valuable insights into the behavior of your comp
 
 ## Getting Started
 
+0. **Installation**:
+
+    To get started, ensure you have Python 3 installed on your system. Then, install the required dependencies:
+
+    ```bash
+    pip install networkx pennylane==0.37.0
+    ```
 1.  Familiarize yourself with:
     *   The [8-qubit QFT](https://en.wikipedia.org/wiki/Quantum_Fourier_transform):
         - Understand the mathematical foundation and circuit representation of the Quantum Fourier Transform.
