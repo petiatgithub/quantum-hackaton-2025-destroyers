@@ -46,6 +46,10 @@ def verifier(positions_history, gates_schedule, graph) -> None:
         graph (networkx.Graph): The graph representing the Penning trap.
     """
     print("Verifying the positions history and gates schedule...")
+    if len(positions_history) != len(gates_schedule):
+        raise ValueError(
+            f"Length of positions history ({len(positions_history)}) does not match length of gates schedule ({len(gates_schedule)})."
+        )
     for i, positions in enumerate(positions_history):
         if len(positions) != 8:
             raise ValueError(f"Invalid number of ions at step {i}: {len(positions)}")
