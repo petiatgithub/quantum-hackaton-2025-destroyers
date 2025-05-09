@@ -96,6 +96,88 @@ def verifier(positions_history, gates_schedule, graph) -> None:
                                 f"Error: Ions {ion1_idx} and {ion2_idx} swapped positions ({prev_pos_ion1} <-> {prev_pos_ion2}) at step {i}."
                             )
 
+        gate = gates_schedule[i]
+
+        for g in gate:
+            # Check gate semantics
+            name, param, wires = g
+            if name not in ["RX", "RY", "MS"]:
+                raise ValueError(
+                    f"Error: Gate name at step {i} is not RX, RY, or MS. Found: {name}"
+                )
+            if not isinstance(name, str):
+                raise ValueError(
+                    f"Error: Gate name at step {i} is not a string. Found: {type(name)}"
+                )
+            if not isinstance(param, (float, int)):
+                raise ValueError(
+                    f"Error: Gate parameter at step {i} is not a float or int. Found: {type(param)}"
+                )
+            if not isinstance(wires, (int, list, tuple)) or (
+                isinstance(wires, (list, tuple))
+                and not all(isinstance(w, int) for w in wires)
+            ):
+                raise ValueError(
+                    f"Error: Gate wires at step {i} are not an int or a list/tuple of ints. Found: {type(wires)}"
+                )
+
+            if isinstance(wires, int):
+                if not (0 <= wires < 8):
+                    raise ValueError(
+                        f"Error: Gate wire at step {i} is out of range [0, 8). Found: {wires}"
+                    )
+            elif isinstance(wires, (list, tuple)):
+                if not all(0 <= w < 8 for w in wires):
+                    raise ValueError(
+                        f"Error: One or more gate wires at step {i} are out of range [0, 8). Found: {wires}"
+                    )
+            if g[0] == "MS":
+                ion_0 = g[2][0]
+                ion_1 = g[2][1]
+
+                pos_0 = positions[ion_0]
+                pos_1 = positions[ion_1]
+                if pos_0 != pos_1:
+                    raise ValueError(
+                        f"Error: Ions {ion_0} and {ion_1} are not at the same position {pos_0} at step {i}."
+                    )
+                if graph.nodes[pos_0]["type"] != "interaction":
+                    raise ValueError(
+                        f"Error: MS gate at step {i} is not at an interaction node. Position: {pos_0}"
+                    )
+                pos_next = positions_history[i + 1]
+                if not (
+                    positions[ion_0] == pos_next[ion_0]
+                    and positions[ion_1] == pos_next[ion_1]
+                ):
+                    raise ValueError(
+                        f"Error: Ions {ion_0} or {ion_1} moved during MS gate at step {i + 1}."
+                    )
+            elif g[0] == "RX" or g[0] == "RY":
+                ion = g[2]
+                pos_ion = positions[ion]
+                if graph.nodes[pos_ion]["type"] == "interaction":
+                    raise ValueError(
+                        f"Error: RX/RY gate at step {i} is on interaction node. Position: {pos_ion}"
+                    )
+                if graph.nodes[pos_ion]["type"] == "idle":
+                    raise ValueError(
+                        f"Error: RX/RY gate at step {i} is on rest node. Position: {pos_ion}"
+                    )
+        # Check wires
+        wires = [g[2] for g in gate]
+
+        flattened_wires = []
+        for wire in wires:
+            if isinstance(wire, (list, tuple)):
+                flattened_wires.extend(wire)
+            else:
+                flattened_wires.append(wire)
+        if len(set(flattened_wires)) != len(flattened_wires):
+            raise ValueError(
+                f"Error: Duplicate wires in gate at step {i}. Wires: {flattened_wires}"
+            )
+
         # Check for overlapping ions
         positions_set = set(positions)
         for p in positions_set:
@@ -150,87 +232,6 @@ def verifier(positions_history, gates_schedule, graph) -> None:
                 if sum([has_ms_gate_b, has_ms_gate_d, has_ms_gate_a]) != 1:
                     raise ValueError(
                         f"Error: Overlapping ions at {overlap} at step {i} have conflicting MS gate conditions. Only one MS gate should be present before, during, or after the overlap."
-                    )
-
-        gate = gates_schedule[i]
-        if len(gate) > 0:
-            wires = [g[2] for g in gate]
-
-            flattened_wires = []
-            for wire in wires:
-                if isinstance(wire, (list, tuple)):
-                    flattened_wires.extend(wire)
-                else:
-                    flattened_wires.append(wire)
-            if len(set(flattened_wires)) != len(flattened_wires):
-                raise ValueError(
-                    f"Error: Duplicate wires in gate at step {i}. Wires: {flattened_wires}"
-                )
-
-        for g in gate:
-            # Check gate semantics
-            name, param, wires = g
-            if name not in ["RX", "RY", "MS"]:
-                raise ValueError(
-                    f"Error: Gate name at step {i} is not RX, RY, or MS. Found: {name}"
-                )
-            if not isinstance(name, str):
-                raise ValueError(
-                    f"Error: Gate name at step {i} is not a string. Found: {type(name)}"
-                )
-            if not isinstance(param, (float, int)):
-                raise ValueError(
-                    f"Error: Gate parameter at step {i} is not a float or int. Found: {type(param)}"
-                )
-            if not isinstance(wires, (int, list, tuple)) or (
-                isinstance(wires, (list, tuple))
-                and not all(isinstance(w, int) for w in wires)
-            ):
-                raise ValueError(
-                    f"Error: Gate wires at step {i} are not an int or a list/tuple of ints. Found: {type(wires)}"
-                )
-
-            if isinstance(wires, int):
-                if not (0 <= wires < 8):
-                    raise ValueError(
-                        f"Error: Gate wire at step {i} is out of range [0, 8). Found: {wires}"
-                    )
-            elif isinstance(wires, (list, tuple)):
-                if not all(0 <= w < 8 for w in wires):
-                    raise ValueError(
-                        f"Error: One or more gate wires at step {i} are out of range [0, 8). Found: {wires}"
-                    )
-            if g[0] == "MS":
-                ion_0 = g[2][0]
-                ion_1 = g[2][1]
-                pos_0 = positions[ion_0]
-                pos_1 = positions[ion_1]
-                if pos_0 != pos_1:
-                    raise ValueError(
-                        f"Error: Ions {ion_0} and {ion_1} are not at the same position {pos_0} at step {i}."
-                    )
-                if graph.nodes[pos_0]["type"] != "interaction":
-                    raise ValueError(
-                        f"Error: MS gate at step {i} is not at an interaction node. Position: {pos_0}"
-                    )
-                pos_next = positions_history[i + 1]
-                if not (
-                    positions[ion_0] == pos_next[ion_0]
-                    and positions[ion_1] == pos_next[ion_1]
-                ):
-                    raise ValueError(
-                        f"Error: Ions {ion_0} or {ion_1} moved during MS gate at step {i}."
-                    )
-            elif g[0] == "RX" or g[0] == "RY":
-                ion = g[2]
-                pos_ion = positions[ion]
-                if graph.nodes[pos_ion]["type"] == "interaction":
-                    raise ValueError(
-                        f"Error: RX/RY gate at step {i} is on interaction node. Position: {pos_ion}"
-                    )
-                if graph.nodes[pos_ion]["type"] == "idle":
-                    raise ValueError(
-                        f"Error: RX/RY gate at step {i} is on rest node. Position: {pos_ion}"
                     )
     print("Positions and gates are valid.")
     print("Verifying the fidelity of the circuit without adding noise...")
