@@ -4,9 +4,11 @@ Welcome to the challenge! Your goal is to compile a Quantum Fourier Transform (Q
 
 ## What is a Penning trap?
 
-A Penning trap confines charged particles using a combination of a strong static magnetic field (for radial confinement) and a quadrupole electric potential (for axial confinement).
+A Penning trap confines charged particles using a combination of a strong static magnetic field (for radial confinement) and a quadrupole electric potential (for axial confinement). The electric potential landscape can be fine tuned using microfabricated electrodes on a trap chip that is then embedded in a magnetic field that is homogenous over the whole trapping volume. The magnetic field is generated either using a superconducting magnet or very strong permanent magnets. 
 
-Unlike the linear 1D arrays typically used in RF traps, Penning traps can naturally form 2D grids of trap sites that can be reconfigured (even in 3D!). This added flexibility can significantly reduce transport costs and improve gate scheduling efficiency, as ions can take shorter paths to their destinations and avoid congestion at critical nodes.
+Unlike the linear 1D arrays typically used in RF traps, Penning traps can naturally form 2D grids of trap sites that can be reconfigured (even in 3D!), limited only by the ability of the trap electrodes to shape the electric potentials. This added flexibility can significantly reduce transport costs and improve gate scheduling efficiency, as ions can take shorter paths to their destinations and avoid congestion at critical nodes. We at ZuriQ are just at the start of the journey and are eager to explore the possibilities unlocked by this architecture. This hackathon challenge will give you the opportunity to be creative and build compilation methods for a novel hardware architecture! 
+
+To learn a bit more about how Penning traps work you can have a look at the references below. The underlying physics sets the limitations that we've modeled in this simplified example, and the knowledge of the classical equations of motion is not necessary. 
 
 ### Your Task: Implementing the Compiler
 
