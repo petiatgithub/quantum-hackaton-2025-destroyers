@@ -101,7 +101,9 @@ Your task is to design and implement a compiler that translates the Quantum Four
     - **Standard Nodes**: 29 nodes where single-qubit RX/RY gates can be applied.
     - **Idle Nodes**: 29 nodes located above the standard nodes, where ions can idle at a lower cost.
 
-    Refer to the implementation in `trap.py`.
+    Refer to the implementation in `trap.py`. Instead of creating the graph from scratch, 
+    use the `create_trap_graph` function provided in the file. This function generates the 5x7 grid structure of 
+    the Penning trap, including the definitions of `interaction`, `standard`, and `idle` nodes.
 
     <p align="center">
         <img src="penning_trap_graph.png" alt="Penning Trap Graph" width="50%">
