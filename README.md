@@ -50,7 +50,7 @@ Your task is to design and implement a compiler that translates the Quantum Four
     - Optimize the schedule to minimize the total time steps and temperature costs.
 
 4. **Optimize for Fidelity**:
-    - Minimize the temperature cost associated with ion shuttling and gate operations to reduce noise.
+    - Minimize the temperature cost (see below for details) associated with ion shuttling to reduce noise applied on MS gates.
     - Ensure that the fidelity between the ideal QFT circuit and the compiled noisy circuit is as high as possible.
 
 5. **Generate Outputs**:
@@ -78,7 +78,6 @@ Your task is to design and implement a compiler that translates the Quantum Four
     - Create a visualization (e.g., a video or diagram) that illustrates:
       - The shuttling of ions across the trap at each time step.
       - The execution of gates and their corresponding positions.
-    - Use this visualization to analyze and refine your approach.
 
 ## Trap Architecture
 
