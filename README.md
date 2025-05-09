@@ -4,7 +4,7 @@ Welcome to the challenge! Your goal is to compile a Quantum Fourier Transform (Q
 
 All the resources and materials for this challenge are available in the repository: [https://github.com/ZuriQ/quantum-hackaton-2025](https://github.com/ZuriQ/quantum-hackaton-2025).
 
-Feel free to clone the repository and submit issues if you encounter any. You can also ask all you physics, ion-trap and quantum related questions there and also in person to the on-site ZuriQ representative.  
+Feel free to clone the repository and submit issues if you encounter any. You can also ask all your physics, ion-trap and quantum related questions there and also in person to the on-site ZuriQ representative.  
 
 ## What is a Penning trap?
 
@@ -36,12 +36,12 @@ To learn a bit more about how Penning traps work you can have a look at the refe
 
 ### Your Task: Implementing the Compiler
 
-Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the trap architecture and physical constraints. The compiler needs to optimise and schedule single and two-qubit gates, while taking into account the 'cost' of reconfiguration, the limited coherence time of the qubits and the trap geometry in. Specifically, your compiler should:
+Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the trap architecture and physical constraints. The compiler needs to optimise and schedule single and two-qubit gates, while taking into account the 'cost' of reconfiguration, the limited coherence time of the qubits. and the trap geometry. Specifically, your compiler should:
 
 
 1. **Decompose the QFT Circuit**:
     - Start with the standard QFT circuit for 8 qubits.
-    - Decompose the QFT into its constituent gates (e.g., single-qubit rotations and controlled-phase gates).
+    - Decompose the QFT into its constituent gates (e.g. single-qubit rotations and controlled-phase gates).
     - Map these gates to the valid operations (`RX`, `RY`, `MS`) supported by the trap.
 
 2. **Plan Ion Shuttling**:
@@ -136,7 +136,7 @@ A "temperature" cost is associated with each ion at each time step, reflecting t
 *   **MS Gate**: During an MS gate, the ions are at an `interaction` node. The cost for being at an `interaction` node is **0.02** per ion per time step.
 
 
-The temperature of all ions is evaluated at each time step. This temperature directly impacts the performance of the MS gate. Specifically, the average temperature of the two ions involved in the MS gate, denoted as $\bar{n}$, is used to calculate the parameter $p$:
+The temperature of all ions is evaluated at each time step. This temperature directly impacts the performance of the MS gate. Specifically, the average temperature (in units of motional quanta) of the two ions involved in the MS gate, denoted as $\bar{n}$, is used to calculate the parameter $p$:
 
 $$p = \frac{\pi^2 \eta^4}{4} \bar{n} (\bar{n} + 1)$$
 
