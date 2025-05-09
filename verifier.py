@@ -100,9 +100,11 @@ def verifier(positions_history, gates_schedule, graph) -> None:
         positions_set = set(positions)
         for p in positions_set:
             if p[-1] != "idle":
-                p = (*p[0:2], "idle")
-                if positions.count(p) > 1:
-                    raise ValueError(f"Error: Overlapping ions at {p} at step {i}.")
+                corresponding_idle = (*p[:2], "idle")
+                if positions.count(corresponding_idle) == 1:
+                    raise ValueError(
+                        f"Error: Overlapping ions at {p} with its corresponding idle position at step {i}."
+                    )
 
         if len(positions_set) < len(positions):
             overlapping_positions = [p for p in positions if positions.count(p) > 1]
