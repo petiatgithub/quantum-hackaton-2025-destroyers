@@ -110,13 +110,14 @@ Your task is to design and implement a compiler that translates the Quantum Four
     *   `MS(angle, wires=(w1, w2))`: [Two-qubit Mølmer–Sørensen gate](https://en.wikipedia.org/wiki/M%C3%B8lmer%E2%80%93S%C3%B8rensen_gate).
 2.  **Gate Execution Rules**:
     *   **RX/RY Gates**:
-        *   Can be applied when an ion is at a `standard` node.
-        *   Last for **one unit of time**.
+        *   Can only be applied when an ion is at a `standard` node.
+        *   Require **one unit of time** to execute.
         *   Cannot be applied at `interaction` or `idle` nodes.
     *   **MS Gates**:
-        *   Must be applied when the two participating ions are located at the *same* `interaction` node.
-        *   Last for **two units of time**. During these two units, the participating ions must remain at the interaction node.
-        *   After the two units of time, ions are moved away from the the interaction node.
+        *   Must be applied when both participating ions are located at the *same* `interaction` node.
+        *   Require **two units of time** to execute. During this period, the participating ions must remain stationary at the interaction node.
+        *   Once the gate operation is complete, the ions must be moved away (immediately) from the interaction node.
+    *   Gates can be executed in parallel, provided they do not involve the same ions.
 3.  **Ion shuttling and Constraints**:
     *   Ions can only move between adjacent nodes in the graph (i.e., where an edge exists).
     *   A move between adjacent nodes takes **one unit of time**.
