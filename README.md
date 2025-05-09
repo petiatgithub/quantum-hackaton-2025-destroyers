@@ -36,7 +36,9 @@ To learn a bit more about how Penning traps work you can have a look at the refe
 - [Architecture for a Large-Scale Ion-Trap Quantum Computer](https://www.nature.com/articles/nature00784)  
 - [Demonstration of the Trapped-Ion Quantum CCD Computer Architecture](https://www.nature.com/articles/s41586-021-03318-4)
 
-### Your Task: Implementing the Compiler
+---
+
+## Your Task: Implementing the Compiler
 
 Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the trap architecture and physical constraints. The compiler needs to optimise and schedule single and two-qubit gates, while taking into account the 'cost' of reconfiguration, the limited coherence time of the qubits. and the trap geometry. Specifically, your compiler should:
 
@@ -87,6 +89,8 @@ Your task is to design and implement a compiler that translates the Quantum Four
       - The shuttling of ions across the trap at each time step.
       - The execution of gates and their corresponding positions.
 
+---
+
 ## Trap Architecture
 
 1.  **Trap Geometry**:
@@ -102,6 +106,8 @@ Your task is to design and implement a compiler that translates the Quantum Four
     <p align="center">
         <img src="penning_trap_graph.png" alt="Penning Trap Graph" width="50%">
     </p>
+
+---
 
 ## Compilation rules
 
@@ -128,6 +134,8 @@ Your task is to design and implement a compiler that translates the Quantum Four
         *   Two ions can share the same `interaction` node only when an MS gate is being applied to them at that specific time (two units of time). Additionally, no more than two ions are allowed at an `interaction` node simultaneously.
         *   During shuttling, if ion A moves from node X to node Y, no other ion can be at node Y at that time step. Exchange moves (A moves X->Y while B moves Y->X) are forbidden.
 
+---
+
 ## Noise
 
 A "temperature" cost is associated with each ion at each time step, reflecting the energy cost of its state/action:
@@ -149,6 +157,7 @@ While $\bar{n}$ is theoretically unbounded, solutions where $\bar{n}$ exceeds 1.
 
 The objective of this hackathon is to optimize the compilation process to ensure that the fidelity between the ideal (noise-free) quantum state and the noisy quantum state remains as close to 1.0 as possible.
 
+---
 
 ## Deliverables
 
@@ -207,6 +216,8 @@ You must provide two main outputs:
 
 This visualization will provide valuable insights into the behavior of your compiler and help refine your approach. It can also serve as a useful tool for communicating your solution to others.
 
+---
+
 ## Evaluation Criteria
 
 *   **Validity**: The `positions_history` and `gates_schedule` must adhere to all the rules outlined above (verified by the `verifier` function).
@@ -214,6 +225,8 @@ This visualization will provide valuable insights into the behavior of your comp
 *   **Cost**: The quantum fidelity is one of the main criteria for evaluation, so calculate it using the `fidelity` function to assess how closely your compiled noisy circuit matches the ideal quantum state. Strive to maximize fidelity by minimizing temperature costs.
 *   **Visualization**: The quality and clarity of the visualization video showcasing ion shuttling and gate interactions will also be considered. This video should effectively illustrate the compilation process and highlight areas for potential optimization.
 *   **Presentation**: Clearly explain your compiler design, detailing each step of the process. Pay special attention to justifying your ion shuttling strategy.
+
+---
 
 ## Getting Started
 
