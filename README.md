@@ -130,22 +130,22 @@ The objective of this hackathon is to optimize the compilation process to ensure
 
 You must provide two main outputs:
 
-1.  **`positions_history`**: A list of lists/tuples.
-    *   `positions_history[t]` should be a list/tuple of length 8, where `positions_history[t][i]` is the node ID representing the position of the i-th ion at time step `t`.
+1.  **`positions_history`**: A list of lists.
+    *   The length of `positions_history` will be the total number of time steps your compiled circuit takes.
+    *   `positions_history[t]` should be a list of length 8 (number of ions), where `positions_history[t][i]` is the node ID representing the position of the i-th ion at time step `t`.
     *   **Interaction Nodes**: Represented as `(row, col)`.
     *   **Standard Nodes**: Represented as `(row, col)`.
     *   **Idle Nodes**: Represented as `(row, col, "idle")`.
-    *   The length of `positions_history` will be the total number of time steps your compiled circuit takes.
 
 2.  **`gates_schedule`**: A list of lists.
+    *   The length of `gates_schedule` must be the same as `positions_history`.
     *   `gates_schedule[t]` should be a list of gate operations occurring at time step `t`.
     *   Each gate operation should be represented as a tuple:
         *   **RX Gate**: Represented as `("RX", angle, wire_index)`, where `angle` is the rotation angle, and `wire_index` specifies the qubit.
         *   **RY Gate**: Represented as `("RY", angle, wire_index)`, where `angle` is the rotation angle, and `wire_index` specifies the qubit.
         *   **MS Gate**: Represented as `("MS", angle, (wire_index_0, wire_index_1))`. This should only be included at the time step when the gate operation begins, but make sure the ions stay in position for the right duration.
-    *   If no gates are applied at time step `t`, `gates_schedule[t]` should be an empty list `[]`.
-    *   The length of `gates_schedule` must be the same as `positions_history`.
-    *   Each gate should appear once and not be repeated for the duration.
+    *   If no gates are applied at a given time step `t`, the corresponding entry in `gates_schedule[t]` should be an empty list `[]`.
+    *   Each gate should be listed only once at the time step it begins and should not be repeated for the duration of its operation.
 
     ### Example Output
 
@@ -154,8 +154,8 @@ You must provide two main outputs:
     #### `positions_history`
     ```python
     positions_history = [
-        [(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1), (3, 0), (3, 1)],  # Initial positions at t=0
-        [(0, 0), (0, 1), (1, 1), (1, 1), (2, 0), (2, 1), (3, 0), (3, 1)],  # Qubit 2 moved to (1, 1)
+        [(0, 0), (0, 1), (1, 0), (1, 2), (2, 0), (2, 1), (3, 0), (3, 1)],  # Initial positions at t=0
+        [(0, 0), (0, 1), (1, 1), (1, 1), (2, 0), (2, 1), (3, 0), (3, 1)],  # Qubit 2/3 moved to (1, 1)
         [(0, 0), (0, 1), (1, 1), (1, 1), (2, 0), (2, 1), (3, 0), (3, 1)],  # No movement at t=2
     ]
     ```
@@ -165,18 +165,18 @@ You must provide two main outputs:
     gates_schedule = [
         [("RX", 1.57, 0), ("RY", 3.14, 1)],  # Gates applied at t=0
         [("MS", 0.78, (2, 3))],              # MS gate applied at t=1
-        [],                                  # (No gates applied at t=2) There is no need to repeat MS for the duration in the gates schedule.
+        [],                                  # (No gates applied at t=2) There is no need to repeat MS for its duration in the gates schedule.
     ]
     ```
 
     In this example:
     - At time step `t=0`, two single-qubit gates (`RX` and `RY`) are applied to qubits 0 and 1, respectively.
     - At time step `t=1`, a two-qubit `MS` gate is applied to qubits 2 and 3.
-    - At time step `t=2`, `MS` is implicity applied, and the ions remain stationary.
+    - At time step `t=2`, `MS` is implicity applied, and the ions at (1, 1) need to remain stationary.
 
     This format ensures that your outputs are clear, valid, and adhere to the rules specified in the challenge.
 
-3. Given `positions_history` and `gates_schedule` and the `graph`, create a visualization of the ion shuttling and gate interactions during the compilation process. This can be in the form of a video or diagram that illustrates:
+3. Given `positions_history` and `gates_schedule` and the `graph`, create a visualization of the ion shuttling and gate interactions during the compilation process. This can be in the form of a video that illustrates:
 
 * The movement of ions across the trap at each time step.
 * The execution of gates (RX, RY, MS) and their corresponding positions.
@@ -189,6 +189,7 @@ This visualization will provide valuable insights into the behavior of your comp
 *   **Correctness**: The compiled sequence of gates must be equivalent to the original QFT circuit. (verified by the `verifier` function)
 *   **Cost**: The quantum fidelity is one of the main criteria for evaluation, so calculate it using the `fidelity` function to assess how closely your compiled noisy circuit matches the ideal quantum state. Strive to maximize fidelity by minimizing temperature costs.
 *   **Visualization**: The quality and clarity of the visualization video showcasing ion shuttling and gate interactions will also be considered. This video should effectively illustrate the compilation process and highlight areas for potential optimization.
+*   **Presentation**: Clearly explain your compiler design, detailing each step of the process. Pay special attention to justifying your ion shuttling strategy.
 
 ## Getting Started
 
