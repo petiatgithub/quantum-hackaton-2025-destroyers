@@ -134,7 +134,7 @@ def compiled_circuit_noisy(gates_schedule, temperature) -> qml.QNode:
                         * average_temp
                         * (2 * average_temp + 1)
                     )
-                    assert 0.0 < prob <= 1.0, (
+                    assert 0.0 <= prob <= 1.0, (
                         f"Average temperature too high: ion {gate[2][0]}: {temp1}, ion {gate[2][1]}: {temp2}"
                     )
                     qml.IsingXX(gate[1], wires=gate[2])
