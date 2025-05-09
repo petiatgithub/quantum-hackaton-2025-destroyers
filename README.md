@@ -3,7 +3,7 @@
 Welcome to the challenge! Your goal is to compile a Quantum Fourier Transform (QFT) circuit for 8 qubits onto a Penning trapped ion quantum computer. You'll need to manage ion transport, gate scheduling, and noise considerations.
 
 All the resources and materials for this challenge are available in the repository:  
-[**GitHub Repository: ZuriQ Quantum Hackathon 2025**](https://github.com/ZuriQ/quantum-hackaton-2025)
+[**ZuriQ Challenge: Quantum Hackathon 2025**](https://github.com/ZuriQ/quantum-hackaton-2025)
 
 Feel free to clone the repository and submit issues if you encounter any. You can also ask all your physics, ion-trap, and quantum-related questions there or directly to the on-site ZuriQ representative.
 
