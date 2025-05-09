@@ -12,7 +12,20 @@ A Penning trap confines charged particles using a combination of a strong static
 
 Unlike the linear 1D arrays typically used in RF traps, Penning traps can naturally form 2D grids of trap sites that can be reconfigured (even in 3D!), limited only by the ability of the trap electrodes to shape the electric potentials. This added flexibility can significantly reduce transport costs and improve gate scheduling efficiency, as ions can take shorter paths to their destinations and avoid congestion at critical nodes. We at ZuriQ are just at the start of the journey and are eager to explore the possibilities unlocked by this architecture. This hackathon challenge will give you the opportunity to be creative and build compilation methods for a novel hardware architecture! 
 
-To learn a bit more about how Penning traps work you can have a look at the references below. The underlying physics sets the limitations that we've modeled in this simplified example, and the knowledge of the classical equations of motion is not necessary. 
+To learn a bit more about how Penning traps work you can have a look at the references below. The underlying physics sets the limitations that we've modeled in this simplified example, but the knowledge of the classical equations of motion is not necessary for this challenge. 
+
+Quantum theory of the Pennning trap: https://www.tandfonline.com/doi/full/10.1080/09500340.2017.1393570
+
+Papers from the ZuriQ team: 
+Scalable Arrays of Micro-Penning Traps for Quantum Computing and Simulation: https://link.aps.org/doi/10.1103/PhysRevX.10.031027
+
+Penning micro-trap for quantum computing: https://www.nature.com/articles/s41586-024-07111-x
+
+A 3-dimensional scanning trapped-ion probe: https://arxiv.org/abs/2412.17528
+
+Heating of ions: 
+Ion-trap measurements of electric-field noise near surfaces: https://link.aps.org/doi/10.1103/RevModPhys.87.1419
+
 
 ### Your Task: Implementing the Compiler
 
