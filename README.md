@@ -1,38 +1,50 @@
-# Quantum Circuit Compilation Challenge: 8-Qubit QFT on a Pennning Trapped Ion Architecture
+# Quantum Circuit Compilation Challenge: 8-Qubit QFT on a Penning Trapped Ion Architecture
 
 Welcome to the challenge! Your goal is to compile a Quantum Fourier Transform (QFT) circuit for 8 qubits onto a Penning trapped ion quantum computer. You'll need to manage ion transport, gate scheduling, and noise considerations.
 
-All the resources and materials for this challenge are available in the repository: [https://github.com/ZuriQ/quantum-hackaton-2025](https://github.com/ZuriQ/quantum-hackaton-2025).
+All the resources and materials for this challenge are available in the repository:  
+[**GitHub Repository: ZuriQ Quantum Hackathon 2025**](https://github.com/ZuriQ/quantum-hackaton-2025)
 
-Feel free to clone the repository and submit issues if you encounter any. You can also ask all your physics, ion-trap and quantum related questions there and also in person to the on-site ZuriQ representative.  
+Feel free to clone the repository and submit issues if you encounter any. You can also ask all your physics, ion-trap, and quantum-related questions there or directly to the on-site ZuriQ representative.
 
-## What is a Penning trap?
+---
 
-A Penning trap confines charged particles using a combination of a strong static magnetic field (for radial confinement) and a quadrupole electric potential (for axial confinement). The electric potential landscape can be fine tuned using microfabricated electrodes on a trap chip that is then embedded in a magnetic field that is homogenous over the whole trapping volume. The magnetic field is generated either using a superconducting magnet or very strong permanent magnets. 
+## What is a Penning Trap?
 
-Unlike the linear 1D arrays typically used in RF traps, Penning traps can naturally form 2D grids of trap sites that can be reconfigured (even in 3D!), limited only by the ability of the trap electrodes to shape the electric potentials. This reconfigurability is used to move ions in and out of interaction and memory zones where they are exposed or hidden from laser beams respectively in an approach know as the Quantum Charged Couple Device (QCCD) architecutre.  The added flexibility of the Penning trap can significantly reduce transport costs in the QCCCD approach and improve gate scheduling efficiency, as ions can take shorter paths to their destinations and avoid congestion at critical nodes. We at ZuriQ are just at the start of the journey and are eager to explore the possibilities unlocked by this architecture. This hackathon challenge will give you the opportunity to be creative and build compilation methods for a novel hardware architecture! 
+A Penning trap confines charged particles using a combination of:  
+- **A strong static magnetic field** (for radial confinement).  
+- **A quadrupole electric potential** (for axial confinement).  
 
-To learn a bit more about how Penning traps work you can have a look at the references below. The underlying physics sets the limitations that we've modeled in this simplified example, but the knowledge of the classical equations of motion is not necessary for this challenge. 
+The electric potential landscape is fine-tuned using microfabricated electrodes on a trap chip embedded in a homogeneous magnetic field. This magnetic field is generated either by a superconducting magnet or very strong permanent magnets.
 
-**Quantum theory of the Pennning trap**
+Unlike the linear 1D arrays typically used in RF traps, Penning traps naturally form **2D grids of trap sites** that can even be reconfigured in **3D**! This reconfigurability is limited only by the ability of the trap electrodes to shape the electric potentials. It allows ions to move in and out of interaction and memory zones, where they are exposed to or hidden from laser beams, respectively. This approach is known as the **Quantum Charged Coupled Device (QCCD) architecture**.
 
-- https://www.tandfonline.com/doi/full/10.1080/09500340.2017.1393570
+The added flexibility of the Penning trap can significantly reduce transport costs in the QCCD approach and improve gate scheduling efficiency. Ions can take shorter paths to their destinations and avoid congestion at critical nodes. At ZuriQ, we are just beginning to explore the possibilities unlocked by this architecture, and this hackathon challenge gives you the opportunity to be creative and build compilation methods for a novel hardware architecture!
 
-**Papers from the ZuriQ team:**
+To learn more about how Penning traps work, check out the references below. While the underlying physics sets the limitations modeled in this challenge, knowledge of the classical equations of motion is not necessary to participate.
 
--Scalable Arrays of Micro-Penning Traps for Quantum Computing and Simulation: https://link.aps.org/doi/10.1103/PhysRevX.10.031027
--Penning micro-trap for quantum computing: https://www.nature.com/articles/s41586-024-07111-x
--A 3-dimensional scanning trapped-ion probe: https://arxiv.org/abs/2412.17528
+---
 
-**Heating of ions:** 
+## References
 
--Ion-trap measurements of electric-field noise near surfaces: https://link.aps.org/doi/10.1103/RevModPhys.87.1419
+### **Quantum Theory of the Penning Trap**
+- [Quantum theory of the Penning trap](https://www.tandfonline.com/doi/full/10.1080/09500340.2017.1393570)
 
-**QCCD:** 
+### **Papers from the ZuriQ Team**
+- [Scalable Arrays of Micro-Penning Traps for Quantum Computing and Simulation](https://link.aps.org/doi/10.1103/PhysRevX.10.031027)  
+- [Penning Micro-Trap for Quantum Computing](https://www.nature.com/articles/s41586-024-07111-x)  
+- [A 3-Dimensional Scanning Trapped-Ion Probe](https://arxiv.org/abs/2412.17528)
 
--Architecture for a large-scale ion-trap quantum computer: https://www.nature.com/articles/nature00784
--Demonstration of the trapped-ion quantum CCD computer architecture: https://www.nature.com/articles/s41586-021-03318-4
+### **Heating of Ions**
+- [Ion-Trap Measurements of Electric-Field Noise Near Surfaces](https://link.aps.org/doi/10.1103/RevModPhys.87.1419)
 
+### **QCCD Architecture**
+- [Architecture for a Large-Scale Ion-Trap Quantum Computer](https://www.nature.com/articles/nature00784)  
+- [Demonstration of the Trapped-Ion Quantum CCD Computer Architecture](https://www.nature.com/articles/s41586-021-03318-4)
+
+---
+
+This challenge is your chance to explore the cutting-edge of quantum computing and contribute to the development of innovative compilation methods for Penning trap architectures. Good luck!
 
 ### Your Task: Implementing the Compiler
 
