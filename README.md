@@ -2,6 +2,10 @@
 
 Welcome to the challenge! Your goal is to compile a Quantum Fourier Transform (QFT) circuit for 8 qubits onto a Penning trapped ion quantum computer. You'll need to manage ion transport, gate scheduling, and noise considerations.
 
+All the resources and materials for this challenge are available in the repository: [https://github.com/ZuriQ/quantum-hackaton-2025](https://github.com/ZuriQ/quantum-hackaton-2025).
+
+Feel free to clone the repository and submit issues if you encounter any.
+
 ## What is a Penning trap?
 
 A Penning trap confines charged particles using a combination of a strong static magnetic field (for radial confinement) and a quadrupole electric potential (for axial confinement). The electric potential landscape can be fine tuned using microfabricated electrodes on a trap chip that is then embedded in a magnetic field that is homogenous over the whole trapping volume. The magnetic field is generated either using a superconducting magnet or very strong permanent magnets. 
