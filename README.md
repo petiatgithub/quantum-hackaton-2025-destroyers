@@ -10,22 +10,26 @@ Feel free to clone the repository and submit issues if you encounter any. You ca
 
 A Penning trap confines charged particles using a combination of a strong static magnetic field (for radial confinement) and a quadrupole electric potential (for axial confinement). The electric potential landscape can be fine tuned using microfabricated electrodes on a trap chip that is then embedded in a magnetic field that is homogenous over the whole trapping volume. The magnetic field is generated either using a superconducting magnet or very strong permanent magnets. 
 
-Unlike the linear 1D arrays typically used in RF traps, Penning traps can naturally form 2D grids of trap sites that can be reconfigured (even in 3D!), limited only by the ability of the trap electrodes to shape the electric potentials. This added flexibility can significantly reduce transport costs and improve gate scheduling efficiency, as ions can take shorter paths to their destinations and avoid congestion at critical nodes. We at ZuriQ are just at the start of the journey and are eager to explore the possibilities unlocked by this architecture. This hackathon challenge will give you the opportunity to be creative and build compilation methods for a novel hardware architecture! 
+Unlike the linear 1D arrays typically used in RF traps, Penning traps can naturally form 2D grids of trap sites that can be reconfigured (even in 3D!), limited only by the ability of the trap electrodes to shape the electric potentials. This reconfigurability is used to move ions in and out of interaction and memory zones where they are exposed or hidden from laser beams respectively in an approach know as the Quantum Charged Couple Device (QCCD) architecutre.  The added flexibility of the Penning trap can significantly reduce transport costs in the QCCCD approach and improve gate scheduling efficiency, as ions can take shorter paths to their destinations and avoid congestion at critical nodes. We at ZuriQ are just at the start of the journey and are eager to explore the possibilities unlocked by this architecture. This hackathon challenge will give you the opportunity to be creative and build compilation methods for a novel hardware architecture! 
 
 To learn a bit more about how Penning traps work you can have a look at the references below. The underlying physics sets the limitations that we've modeled in this simplified example, but the knowledge of the classical equations of motion is not necessary for this challenge. 
 
 Quantum theory of the Pennning trap: https://www.tandfonline.com/doi/full/10.1080/09500340.2017.1393570
 
-**Papers from the ZuriQ team: **
+**Papers from the ZuriQ team:**
 
-Scalable Arrays of Micro-Penning Traps for Quantum Computing and Simulation: https://link.aps.org/doi/10.1103/PhysRevX.10.031027
-
-Penning micro-trap for quantum computing: https://www.nature.com/articles/s41586-024-07111-x
-
-A 3-dimensional scanning trapped-ion probe: https://arxiv.org/abs/2412.17528
+-Scalable Arrays of Micro-Penning Traps for Quantum Computing and Simulation: https://link.aps.org/doi/10.1103/PhysRevX.10.031027
+-Penning micro-trap for quantum computing: https://www.nature.com/articles/s41586-024-07111-x
+-A 3-dimensional scanning trapped-ion probe: https://arxiv.org/abs/2412.17528
 
 **Heating of ions:** 
-Ion-trap measurements of electric-field noise near surfaces: https://link.aps.org/doi/10.1103/RevModPhys.87.1419
+-Ion-trap measurements of electric-field noise near surfaces: https://link.aps.org/doi/10.1103/RevModPhys.87.1419
+
+
+**QCCD:** 
+
+-Architecture for a large-scale ion-trap quantum computer: https://www.nature.com/articles/nature00784
+-Demonstration of the trapped-ion quantum CCD computer architecture: https://www.nature.com/articles/s41586-021-03318-4
 
 
 ### Your Task: Implementing the Compiler
