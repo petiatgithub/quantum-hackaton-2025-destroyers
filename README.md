@@ -4,7 +4,7 @@ Welcome to the challenge! Your goal is to compile a Quantum Fourier Transform (Q
 
 All the resources and materials for this challenge are available in the repository: [https://github.com/ZuriQ/quantum-hackaton-2025](https://github.com/ZuriQ/quantum-hackaton-2025).
 
-Feel free to clone the repository and submit issues if you encounter any.
+Feel free to clone the repository and submit issues if you encounter any. You can also ask all you physics, ion-trap and quantum related questions there and also in person to the on-site ZuriQ representative.  
 
 ## What is a Penning trap?
 
@@ -16,14 +16,15 @@ To learn a bit more about how Penning traps work you can have a look at the refe
 
 Quantum theory of the Pennning trap: https://www.tandfonline.com/doi/full/10.1080/09500340.2017.1393570
 
-Papers from the ZuriQ team: 
+**Papers from the ZuriQ team: **
+
 Scalable Arrays of Micro-Penning Traps for Quantum Computing and Simulation: https://link.aps.org/doi/10.1103/PhysRevX.10.031027
 
 Penning micro-trap for quantum computing: https://www.nature.com/articles/s41586-024-07111-x
 
 A 3-dimensional scanning trapped-ion probe: https://arxiv.org/abs/2412.17528
 
-Heating of ions: 
+**Heating of ions:** 
 Ion-trap measurements of electric-field noise near surfaces: https://link.aps.org/doi/10.1103/RevModPhys.87.1419
 
 
