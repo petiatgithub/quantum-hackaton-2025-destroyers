@@ -131,13 +131,13 @@ def verifier(positions_history, gates_schedule, graph) -> None:
                         has_ms_gate_d = True
                         has_ms_gate = True
                         break
-                if not has_ms_gate and i > 0:
+                if i > 0:
                     for g in gates_schedule[i - 1]:
                         if g[0] == "MS" and set(g[2]) == set(overlapping_ions):
                             has_ms_gate_b = True
                             has_ms_gate = True
                             break
-                if not has_ms_gate and i < len(gates_schedule) - 1:
+                if i < len(gates_schedule) - 1:
                     for g in gates_schedule[i + 1]:
                         if g[0] == "MS" and set(g[2]) == set(overlapping_ions):
                             has_ms_gate_a = True
@@ -147,7 +147,6 @@ def verifier(positions_history, gates_schedule, graph) -> None:
                     raise ValueError(
                         f"Error: Overlapping ions at {overlap} at step {i} without an MS gate before, during, or after."
                     )
-
                 if sum([has_ms_gate_b, has_ms_gate_d, has_ms_gate_a]) != 1:
                     raise ValueError(
                         f"Error: Overlapping ions at {overlap} at step {i} have conflicting MS gate conditions. Only one MS gate should be present before, during, or after the overlap."
@@ -156,6 +155,7 @@ def verifier(positions_history, gates_schedule, graph) -> None:
         gate = gates_schedule[i]
         if len(gate) > 0:
             wires = [g[2] for g in gate]
+
             flattened_wires = []
             for wire in wires:
                 if isinstance(wire, (list, tuple)):
@@ -182,24 +182,24 @@ def verifier(positions_history, gates_schedule, graph) -> None:
                 raise ValueError(
                     f"Error: Gate parameter at step {i} is not a float or int. Found: {type(param)}"
                 )
-            if not (
-                isinstance(wires, int)
-                or isinstance(wires, (list, tuple))
-                and all(isinstance(w, int) for w in wires)
+            if not isinstance(wires, (int, list, tuple)) or (
+                isinstance(wires, (list, tuple))
+                and not all(isinstance(w, int) for w in wires)
             ):
-                if isinstance(wires, int):
-                    if not (0 <= wires < 8):
-                        raise ValueError(
-                            f"Error: Gate wire at step {i} is out of range [0, 8). Found: {wires}"
-                        )
-                elif isinstance(wires, (list, tuple)):
-                    if not all(0 <= w < 8 for w in wires):
-                        raise ValueError(
-                            f"Error: One or more gate wires at step {i} are out of range [0, 8). Found: {wires}"
-                        )
                 raise ValueError(
-                    f"Error: Gate wires at step {i} are not an int or tuple/list of ints. Found: {type(wires)}"
+                    f"Error: Gate wires at step {i} are not an int or a list/tuple of ints. Found: {type(wires)}"
                 )
+
+            if isinstance(wires, int):
+                if not (0 <= wires < 8):
+                    raise ValueError(
+                        f"Error: Gate wire at step {i} is out of range [0, 8). Found: {wires}"
+                    )
+            elif isinstance(wires, (list, tuple)):
+                if not all(0 <= w < 8 for w in wires):
+                    raise ValueError(
+                        f"Error: One or more gate wires at step {i} are out of range [0, 8). Found: {wires}"
+                    )
             if g[0] == "MS":
                 ion_0 = g[2][0]
                 ion_1 = g[2][1]
