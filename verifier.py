@@ -205,7 +205,6 @@ def verifier(positions_history, gates_schedule, graph) -> None:
                 ]
                 has_ms_gate_b = False
                 has_ms_gate_d = False
-                has_ms_gate_a = False
 
                 has_ms_gate = False
                 for g in gates_schedule[i]:
@@ -219,19 +218,13 @@ def verifier(positions_history, gates_schedule, graph) -> None:
                             has_ms_gate_b = True
                             has_ms_gate = True
                             break
-                if i < len(gates_schedule) - 1:
-                    for g in gates_schedule[i + 1]:
-                        if g[0] == "MS" and set(g[2]) == set(overlapping_ions):
-                            has_ms_gate_a = True
-                            has_ms_gate = True
-                            break
                 if not has_ms_gate:
                     raise ValueError(
-                        f"Error: Overlapping ions at {overlap} at step {i} without an MS gate before, during, or after."
+                        f"Error: Overlapping ions at {overlap} at step {i} without an MS gate before, or during the overlap."
                     )
-                if sum([has_ms_gate_b, has_ms_gate_d, has_ms_gate_a]) != 1:
+                if sum([has_ms_gate_b, has_ms_gate_d]) != 1:
                     raise ValueError(
-                        f"Error: Overlapping ions at {overlap} at step {i} have conflicting MS gate conditions. Only one MS gate should be present before, during, or after the overlap."
+                        f"Error: Overlapping ions at {overlap} at step {i} and step {i - 1} have conflicting MS gate. Only one MS gate should be present."
                     )
     print("Positions and gates are valid.")
     print("Verifying the fidelity of the circuit without adding noise...")

@@ -103,13 +103,14 @@ Your task is to design and implement a compiler that translates the Quantum Four
     *   **MS Gates**:
         *   Must be applied when the two participating ions are located at the *same* `interaction` node.
         *   Last for **two units of time**. During these two units, the participating ions must remain at the interaction node.
+        *   After the two units of time, ions are moved away from the the interaction node.
 3.  **Ion shuttling and Constraints**:
     *   Ions can only move between adjacent nodes in the graph (i.e., where an edge exists).
     *   A move between adjacent nodes takes **one unit of time**.
     *   **No Overlap**:
         *   Two ions cannot occupy the same `standard` or `idle` node at the same time.
         *   Two ions cannot occupy simultaneously the `standard` node and the `idle` above it.
-        *   Two ions can share the same `interaction` node only when an MS gate is being applied to them at that specific time (or immediately preceding it). Additionally, no more than two ions are allowed at an `interaction` node simultaneously.
+        *   Two ions can share the same `interaction` node only when an MS gate is being applied to them at that specific time (two units of time). Additionally, no more than two ions are allowed at an `interaction` node simultaneously.
         *   During shuttling, if ion A moves from node X to node Y, no other ion can be at node Y at that time step. Exchange moves (A moves X->Y while B moves Y->X) are forbidden.
 
 ## Noise
@@ -119,6 +120,8 @@ A "temperature" cost is associated with each ion at each time step, reflecting t
 *   **Being at a `standard` node** (either staying or moving to/from it, if not a `idle` node): Cost increase of **0.02** for that ion. This includes time steps where RX/RY gates are applied.
 *   **shuttling**: If an ion moves from one node to another: Cost increase of **0.03** for that ion for that time step.
 *   **MS Gate**: During an MS gate, the ions are at an `interaction` node. The cost for being at an `interaction` node is **0.02** per ion per time step.
+
+
 The temperature of all ions is evaluated at each time step. This temperature directly impacts the performance of the MS gate. Specifically, the average temperature of the two ions involved in the MS gate, denoted as $\bar{n}$, is used to calculate the parameter $p$:
 
 $$p = \frac{\pi^2 \eta^4}{4} \bar{n} (\bar{n} + 1)$$
