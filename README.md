@@ -4,7 +4,7 @@ Welcome to the challenge! Your goal is to compile a Quantum Fourier Transform (Q
 
 All the resources and materials for this challenge are available in the repository: [https://github.com/ZuriQ/quantum-hackaton-2025](https://github.com/ZuriQ/quantum-hackaton-2025).
 
-Feel free to clone the repository and submit issues if you encounter any.
+Feel free to clone the repository and submit issues if you encounter any. You can also ask all you physics, ion-trap and quantum related questions there and also in person to the on-site ZuriQ representative.  
 
 ## What is a Penning trap?
 
@@ -16,28 +16,22 @@ To learn a bit more about how Penning traps work you can have a look at the refe
 
 Quantum theory of the Pennning trap: https://www.tandfonline.com/doi/full/10.1080/09500340.2017.1393570
 
-Papers from the ZuriQ team: 
+**Papers from the ZuriQ team: **
+
 Scalable Arrays of Micro-Penning Traps for Quantum Computing and Simulation: https://link.aps.org/doi/10.1103/PhysRevX.10.031027
 
 Penning micro-trap for quantum computing: https://www.nature.com/articles/s41586-024-07111-x
 
 A 3-dimensional scanning trapped-ion probe: https://arxiv.org/abs/2412.17528
 
-Heating of ions: 
+**Heating of ions:** 
 Ion-trap measurements of electric-field noise near surfaces: https://link.aps.org/doi/10.1103/RevModPhys.87.1419
 
 
 ### Your Task: Implementing the Compiler
 
-Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the trap architecture and physical constraints. Specifically, your compiler should:
+Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the trap architecture and physical constraints. The compiler needs to optimise and schedule single and two-qubit gates, while taking into account the 'cost' of reconfiguration, the limited coherence time of the qubits and the trap geometry in. Specifically, your compiler should:
 
-0. **Installation**:
-
-    To get started, ensure you have Python 3 installed on your system. Then, install the required dependencies:
-
-    ```bash
-    pip install networkx pennylane==0.37.0
-    ```
 
 1. **Decompose the QFT Circuit**:
     - Start with the standard QFT circuit for 8 qubits.
@@ -216,6 +210,13 @@ This visualization will provide valuable insights into the behavior of your comp
 
 ## Getting Started
 
+0. **Installation**:
+
+    To get started, ensure you have Python 3 installed on your system. Then, install the required dependencies:
+
+    ```bash
+    pip install networkx pennylane==0.37.0
+    ```
 1.  Familiarize yourself with:
     *   The [8-qubit QFT](https://en.wikipedia.org/wiki/Quantum_Fourier_transform):
         - Understand the mathematical foundation and circuit representation of the Quantum Fourier Transform.
