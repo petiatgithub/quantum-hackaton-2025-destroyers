@@ -14,7 +14,9 @@ Unlike the linear 1D arrays typically used in RF traps, Penning traps can natura
 
 To learn a bit more about how Penning traps work you can have a look at the references below. The underlying physics sets the limitations that we've modeled in this simplified example, but the knowledge of the classical equations of motion is not necessary for this challenge. 
 
-Quantum theory of the Pennning trap: https://www.tandfonline.com/doi/full/10.1080/09500340.2017.1393570
+**Quantum theory of the Pennning trap**
+
+- https://www.tandfonline.com/doi/full/10.1080/09500340.2017.1393570
 
 **Papers from the ZuriQ team:**
 
@@ -23,8 +25,8 @@ Quantum theory of the Pennning trap: https://www.tandfonline.com/doi/full/10.108
 -A 3-dimensional scanning trapped-ion probe: https://arxiv.org/abs/2412.17528
 
 **Heating of ions:** 
--Ion-trap measurements of electric-field noise near surfaces: https://link.aps.org/doi/10.1103/RevModPhys.87.1419
 
+-Ion-trap measurements of electric-field noise near surfaces: https://link.aps.org/doi/10.1103/RevModPhys.87.1419
 
 **QCCD:** 
 
