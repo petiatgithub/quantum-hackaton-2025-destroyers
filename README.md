@@ -38,10 +38,6 @@ To learn more about how Penning traps work, check out the references below. Whil
 - [Architecture for a Large-Scale Ion-Trap Quantum Computer](https://www.nature.com/articles/nature00784)  
 - [Demonstration of the Trapped-Ion Quantum CCD Computer Architecture](https://www.nature.com/articles/s41586-021-03318-4)
 
----
-
-This challenge is your chance to explore the cutting-edge of quantum computing and contribute to the development of innovative compilation methods for Penning trap architectures. Good luck!
-
 ### Your Task: Implementing the Compiler
 
 Your task is to design and implement a compiler that translates the Quantum Fourier Transform (QFT) circuit for 8 qubits into a sequence of ion positions and gate operations that adhere to the trap architecture and physical constraints. The compiler needs to optimise and schedule single and two-qubit gates, while taking into account the 'cost' of reconfiguration, the limited coherence time of the qubits. and the trap geometry. Specifically, your compiler should:
