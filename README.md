@@ -17,7 +17,7 @@ A Penning trap confines charged particles using a combination of:
 
 The electric potential landscape is fine-tuned using microfabricated electrodes on a trap chip embedded in a homogeneous magnetic field. This magnetic field is generated either by a superconducting magnet or very strong permanent magnets.
 
-Unlike the linear 1D arrays typically used in RF traps, Penning traps naturally form **2D grids of trap sites** that can even be reconfigured in **3D**! This reconfigurability is limited only by the ability of the trap electrodes to shape the electric potentials. It allows ions to move in and out of interaction and memory zones, where they are exposed to or hidden from laser beams, respectively. This approach is known as the **Quantum Charged Coupled Device (QCCD) architecture**.
+Unlike the linear 1D arrays typically used in RF traps, Penning traps naturally form 2D grids of trap sites that can even be reconfigured in 3D! This reconfigurability is limited only by the ability of the trap electrodes to shape the electric potentials. It allows ions to move in and out of interaction and memory zones, where they are exposed to or hidden from laser beams, respectively. This approach is known as the Quantum Charged Coupled Device (QCCD) architecture.
 
 The added flexibility of the Penning trap can significantly reduce transport costs in the QCCD approach and improve gate scheduling efficiency. Ions can take shorter paths to their destinations and avoid congestion at critical nodes. At ZuriQ, we are just beginning to explore the possibilities unlocked by this architecture, and this hackathon challenge gives you the opportunity to be creative and build compilation methods for a novel hardware architecture!
 
