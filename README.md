@@ -11,7 +11,7 @@ Feel free to clone the repository and submit issues if you encounter any. You ca
 
 ## What is a Penning Trap?
 
-A Penning trap confines charged particles using a combination of a strong static magnetic field (for radial confinement) and a quadrupole electric potential** (for axial confinement). The electric potential landscape is fine-tuned using microfabricated electrodes on a trap chip embedded in a homogeneous magnetic field. This magnetic field is generated either by a superconducting magnet or very strong permanent magnets.
+A Penning trap confines charged particles using a combination of a strong static magnetic field (for radial confinement) and a quadrupole electric potential (for axial confinement). The electric potential landscape is fine-tuned using microfabricated electrodes on a trap chip embedded in a homogeneous magnetic field. This magnetic field is generated either by a superconducting magnet or very strong permanent magnets.
 
 Unlike the linear 1D arrays typically used in RF traps, Penning traps naturally form 2D grids of trap sites that can even be reconfigured in 3D! This reconfigurability is limited only by the ability of the trap electrodes to shape the electric potentials. It allows ions to move in and out of interaction and memory zones, where they are exposed to or hidden from laser beams, respectively. This approach is known as the Quantum Charged Coupled Device (QCCD) architecture.
 
