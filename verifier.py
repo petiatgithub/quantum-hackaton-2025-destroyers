@@ -7,6 +7,11 @@ mixed_device = qml.device("default.mixed", wires=8)
 @qml.qnode(device=mixed_device)
 def circuit():
     qml.QFT(wires=range(8))
+
+    # commnet out above, and add network here you want to test.
+    #from math import pi
+    #qml.RX(pi, wires=[0])
+
     return qml.density_matrix(wires=range(8))
 
 
