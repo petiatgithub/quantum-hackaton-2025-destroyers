@@ -1,3 +1,5 @@
+# The Destroyers Solution
+
 # Quantum Circuit Compilation Challenge: 8-Qubit QFT on a Penning Trapped Ion Architecture
 
 Welcome to the challenge! Your goal is to compile a Quantum Fourier Transform (QFT) circuit for 8 qubits onto a Penning trapped ion quantum computer. You'll need to manage ion transport, gate scheduling, and noise considerations.
