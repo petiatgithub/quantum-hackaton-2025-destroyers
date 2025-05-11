@@ -37,6 +37,7 @@ for i, layer in enumerate(dag.layers()):
         # print(f"  {gate}")
         current_layer.append(gate)
     layers.append(current_layer)
+    # print(str(current_layer) + ",")
 # print(layers)
 
 # Draw the transpiled circuit
