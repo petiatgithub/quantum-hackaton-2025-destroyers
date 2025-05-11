@@ -128,7 +128,7 @@ class GatesScheduleTicks():
 
         self.tick = Tick()
         self.ticks.append(self.tick)
-        print(self.is_wire_free)
+        # print(self.is_wire_free)
 
 gates = [gate for layer in layers for gate in layer]
 
@@ -138,5 +138,10 @@ gates = [gate for layer in layers for gate in layer]
 tmp = GatesScheduleTicks()
 tmp.gen(gates)
 
+from tabulate import tabulate
+
+toprint = []
 for tick in tmp.ticks:
-    print(tick.gates)
+    toprint.append(tick.gates)
+
+print(tabulate(toprint, headers=["Q0", "Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"]))
