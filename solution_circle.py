@@ -122,8 +122,10 @@ for layer in layers:
         elif positions[to_ms1] != -1 and positions[to_ms2] == -1:
             move_1_to_center(to_ms1, to_ms2)
     else:
+        # TODO
         print(layer)
         raise Exception("two rxx in the same layer")
 
+gates_schedule = layers
 
 print(verifier(positions_history, layers, create_trap_graph()))
