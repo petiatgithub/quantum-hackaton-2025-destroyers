@@ -1,4 +1,11 @@
 # The Destroyers Solution
+How to navigate our solution:
+- "transpile_qiskit" transforms the QFT into a correct circuit of depth 32 using the native gate set - the gates_schedule variable is the same as the layers variable;
+- "solution_circle" and "solution_assembly" attempt two solutions at positioning the ions;
+- "gates_schedule_ticks" helps schedule the solution in "solution_assembly";
+- "test" helps us test the validity of our QFT circuit.
+
+
 
 # Quantum Circuit Compilation Challenge: 8-Qubit QFT on a Penning Trapped Ion Architecture
 
@@ -110,7 +117,7 @@ Your task is to design and implement a compiler that translates the Quantum Four
     the Penning trap, including the definitions of `interaction`, `standard`, and `idle` nodes.
 
     <p align="center">
-        <img src="penning_trap_graph.png" alt="Penning Trap Graph" width="50%">
+        <img src="helper_files/penning_trap_graph.png" alt="Penning Trap Graph" width="50%">
     </p>
 
 ---
