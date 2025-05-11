@@ -1,5 +1,7 @@
 import numpy as np
 from transpile_qiskit import layers
+from trap import create_trap_graph
+from verifier import verifier
 
 initial_positions = [(0,0), (0,1), (0,2), (1,2), (2,2), (2,1), (2,0), (1,0)]
 positions = [0, 1, 2, 3, 4, 5, 6, 7]
@@ -24,6 +26,7 @@ def move_2_to_center(q1, q2):
         if positions[q] == -1 and len(free_positions) > 0:
             positions[q] = free_positions.pop()
 
+    # Permute if needed.
     if (positions[q1] - positions[q2]) % 2 == 1 or positions[q1] % 2 == 0 or positions.count(-1) > 0:
         circular_permutation()
 
@@ -89,25 +92,27 @@ def move_out(qubits):
 
 
 
+positions_history = []
 
 for layer in layers:
-    count_ms = [gate._1 for gate in layer].count("MS")
+    positions_history.append(list(positions))
+    count_ms = [gate[0] for gate in layer].count("MS")
 
     if count_ms == 0:
         # Find the qubits that need to be out of the center.
         gate_qubits = set()
         for gate in layer:
-            gate_qubits.add(gate._3)
+            gate_qubits.add(gate[2])
         # If they are in the center, move them out.
         move_out(gate_qubits)
 
     elif count_ms == 1:
         for gate in layer:
-            if gate._1 == "MS":
+            if gate[0] == "MS":
                 ms = gate
         # Find the ions on which the gate acts.
-        to_ms1 = ms._3._1
-        to_ms2 = ms._3._2
+        to_ms1 = ms[2][0]
+        to_ms2 = ms[2][1]
 
         # Make sure both ions are in the center.
         if positions[to_ms1] != -1 and positions[to_ms2] != -1:
@@ -117,4 +122,8 @@ for layer in layers:
         elif positions[to_ms1] != -1 and positions[to_ms2] == -1:
             move_1_to_center(to_ms1, to_ms2)
     else:
+        print(layer)
         raise Exception("two rxx in the same layer")
+
+
+print(verifier(positions_history, layers, create_trap_graph()))
