@@ -81,26 +81,31 @@ class GatesScheduleTicks():
 
     def gen(self, gates_in):
 
-        buttom_in = 0
+        # buttom_in = 0
 
-        while buttom_in < len(gates_in):
-            scan_in = buttom_in
+        while 0 < len(gates_in):
+            scan_in = 0
             while (scan_in < len(gates_in)) and not self.tick.is_full():
                 # check iof adding gate is abelian
                 if gates_in[scan_in][0] == 'RX' or gates_in[scan_in][0] == 'RY':
                     # check if gate is in single qbit gate tick
                     if (len(self.ticks) % 3 != 0) and self.is_wire_free[gates_in[scan_in][2]]:
                         self.tick.gates[gates_in[scan_in][2]] = gates_in[scan_in]
-                        buttom_in += 1
-                    self.is_wire_free[gates_in[scan_in][2]] = False
+                        self.is_wire_free[gates_in[scan_in][2]] = False
+                        del gates_in[scan_in]
+                    else:
+                        self.is_wire_free[gates_in[scan_in][2]] = False
                 elif gates_in[scan_in][0] == 'MS':
                     # check if gate is in two qbit gate tick
                     if (len(self.ticks) % 3 == 0) and self.is_wire_free[gates_in[scan_in][2][0]] and self.is_wire_free[gates_in[scan_in][2][1]]:
                         self.tick.gates[gates_in[scan_in][2][0]] = gates_in[scan_in]
                         # only add once
-                        buttom_in += 1
-                    self.is_wire_free[gates_in[scan_in][2][0]] = False
-                    self.is_wire_free[gates_in[scan_in][2][1]] = False
+                        self.is_wire_free[gates_in[scan_in][2][0]] = False
+                        self.is_wire_free[gates_in[scan_in][2][1]] = False
+                        del gates_in[scan_in]
+                    else:
+                        self.is_wire_free[gates_in[scan_in][2][0]] = False
+                        self.is_wire_free[gates_in[scan_in][2][1]] = False
                 else:
                     raise ValueError("Unexpected gate tyep" + gates_in[scan_in][0] + ".")
                 scan_in += 1
