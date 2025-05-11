@@ -26,7 +26,7 @@ transpiled_qc = transpile(qc, basis_gates=basis_gates, optimization_level=3, app
 dag = circuit_to_dag(transpiled_qc)
 
 layers = []
-for i, layer in enumerate(dag.layers()):
+for i, layer in enumerate(dag.ticks()):
     print(f"Layer {i}:")
     current_layer = []
     for op in layer["graph"].op_nodes():
@@ -53,7 +53,7 @@ print(layers[0][0][1])
 layers_ticks = []
 
 @dataclass
-class LayerTicks():
+class Tick():
 
      gates = [None] * 8
      time = time = 0
@@ -64,10 +64,11 @@ class LayerTicks():
 class GatesScheduleTicks():
 
     def __init__(self):
-        self.layer:LayerTicks = None
+        self.tick:Tick = None
         self.is_wire_free = None
-        self.add_layer()
-        self.layers:List[LayerTicks] = [self.cur_layer]
+        self.ticks: List[Tick] = []
+        self.add_tick()
+
 
     def gen(self, gates_in):
 
@@ -76,36 +77,47 @@ class GatesScheduleTicks():
         while buttom_in < len(gates_in):
             scan_in = buttom_in
             while scan_in < len(gates_in):
-                # abelian
+                # check iof adding gate is abelian
                 if gates_in[scan_in][0] == 'RX' or gates_in[scan_in][0] == 'RY':
-                    if self.is_wire_free[gates_in[scan_in][2]]:
-                        self.layer.gates[gates_in[scan_in][2]] = gates_in[scan_in]
-                        self.is_wire_free[gates_in[scan_in][2]] = False
+                    # check if gate is in single qbit gate tick
+                    if (len(self.ticks) % 3 != 0) and self.is_wire_free[gates_in[scan_in][2]]:
+                        self.tick.gates[gates_in[scan_in][2]] = gates_in[scan_in]
+                        buttom_in += 1
+                    self.is_wire_free[gates_in[scan_in][2]] = False
                 elif gates_in[scan_in][0] == 'MS':
-                    if self.is_wire_free[gates_in[scan_in][2][0]] and self.is_wire_free[gates_in[scan_in][2][1]]:
-                        self.layer.gates[gates_in[scan_in][2][0]] = gates_in[scan_in]
+                    # check if gate is in two qbit gate tick
+                    if (len(self.ticks) % 3 == 0) and self.is_wire_free[gates_in[scan_in][2][0]] and self.is_wire_free[gates_in[scan_in][2][1]]:
+                        self.tick.gates[gates_in[scan_in][2][0]] = gates_in[scan_in]
                         # only add once
-                        self.is_wire_free[gates_in[scan_in][2][0]] = False
-                        self.is_wire_free[gates_in[scan_in][2][1]] = False
-                elif:
+                        buttom_in += 1
+                    self.is_wire_free[gates_in[scan_in][2][0]] = False
+                    self.is_wire_free[gates_in[scan_in][2][1]] = False
+                else:
                     raise ValueError("Unexpected gate tyep" + gates_in[scan_in][0] + ".")
+                scan_in += 1
 
-            self.add_layer()
+            self.add_tick()
 
-    def add_layer(self) -> LayerTicks:
+    def add_tick(self) -> Tick:
 
         self.is_wire_free = [True] * 8
 
-        if self.layer is not None:
+        if self.tick is not None:
             wire = 0
             while wire < len(self.is_wire_free):
-                if self.layer.gates[wire] is not None:
-                    if self.layer.gates[wire][0] == 'MS':
-                        self.is_wire_free[self.layer.gates[wire][2][0]] = False
-                        self.is_wire_free[self.layer.gates[wire][2][1]] = False
+                if self.tick.gates[wire] is not None:
+                    if self.tick.gates[wire][0] == 'MS':
+                        self.is_wire_free[self.tick.gates[wire][2][0]] = False
+                        self.is_wire_free[self.tick.gates[wire][2][1]] = False
 
-        self.layer = LayerTicks()
+        self.tick = Tick()
+        self.ticks.append(self.tick)
 
+gates = [gate for layer in layers for gate in layer]
 
+# print(layers)
+# print(gates)
 
-
+tmp = GatesScheduleTicks()
+tmp.gen(gates)
+print(tmp.ticks)
