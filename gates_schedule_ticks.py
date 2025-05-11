@@ -26,7 +26,7 @@ transpiled_qc = transpile(qc, basis_gates=basis_gates, optimization_level=3, app
 dag = circuit_to_dag(transpiled_qc)
 
 layers = []
-for i, layer in enumerate(dag.ticks()):
+for i, layer in enumerate(dag.layers()):
     print(f"Layer {i}:")
     current_layer = []
     for op in layer["graph"].op_nodes():
@@ -41,23 +41,32 @@ for i, layer in enumerate(dag.ticks()):
         current_layer.append(gate)
     layers.append(current_layer)
 #print(layers)
-print(layers[0][0])
-print(layers[0][0][0])
-print(layers[0][0][1])
 
 # Draw the transpiled circuit
 # print(transpiled_qc.draw(output='text'))
 
 
 
-layers_ticks = []
-
-@dataclass
+#@dataclass
 class Tick():
 
-     gates = [None] * 8
-     time = time = 0
-     layer_type = None # 'D' or 'S'
+    def __init__(self):
+        self.gates = [None] * 8
+        # self.time = 0
+        # self.tick_type = None # 'D' or 'S'
+
+        # gates = [None] * 8
+        # # time = time = 0
+        # # tick_type = None # 'D' or 'S'
+
+    def is_two_qbit_gate(self)-> bool:
+        pass
+
+    def is_full(self) -> bool:
+        for gate in self.gates:
+            if gate is None:
+                return False
+        return True
 
 
 
@@ -76,7 +85,7 @@ class GatesScheduleTicks():
 
         while buttom_in < len(gates_in):
             scan_in = buttom_in
-            while scan_in < len(gates_in):
+            while (scan_in < len(gates_in)) and not self.tick.is_full():
                 # check iof adding gate is abelian
                 if gates_in[scan_in][0] == 'RX' or gates_in[scan_in][0] == 'RY':
                     # check if gate is in single qbit gate tick
@@ -96,6 +105,7 @@ class GatesScheduleTicks():
                     raise ValueError("Unexpected gate tyep" + gates_in[scan_in][0] + ".")
                 scan_in += 1
 
+            print(self.tick.gates)
             self.add_tick()
 
     def add_tick(self) -> Tick:
@@ -109,9 +119,11 @@ class GatesScheduleTicks():
                     if self.tick.gates[wire][0] == 'MS':
                         self.is_wire_free[self.tick.gates[wire][2][0]] = False
                         self.is_wire_free[self.tick.gates[wire][2][1]] = False
+                wire += 1
 
         self.tick = Tick()
         self.ticks.append(self.tick)
+        print(self.is_wire_free)
 
 gates = [gate for layer in layers for gate in layer]
 
@@ -120,4 +132,6 @@ gates = [gate for layer in layers for gate in layer]
 
 tmp = GatesScheduleTicks()
 tmp.gen(gates)
-print(tmp.ticks)
+
+for tick in tmp.ticks:
+    print(tick.gates)
