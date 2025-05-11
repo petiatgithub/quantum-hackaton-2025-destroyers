@@ -144,4 +144,5 @@ toprint = []
 for tick in tmp.ticks:
     toprint.append(tick.gates)
 
+print("No of ticks:" + str(len(toprint)))
 print(tabulate(toprint, headers=["Q0", "Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"]))
