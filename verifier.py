@@ -9,8 +9,10 @@ def circuit():
     qml.QFT(wires=range(8))
 
     # commnet out above, and add network here you want to test.
-    #from math import pi
-    #qml.RX(pi, wires=[0])
+    # from numpy import pi
+    # qml.RX(pi, wires=[0])
+    # qml.RY(pi/2, wires=[0])
+    # qml.Hadamard(wires=0)
 
     return qml.density_matrix(wires=range(8))
 
